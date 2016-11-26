@@ -25,8 +25,16 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem systemItem="camera" id="xnc-fh-1Sn"/>
-                                    <barButtonItem title="Album" id="8b3-kp-HYp"/>
+                                    <barButtonItem systemItem="camera" id="xnc-fh-1Sn">
+                                        <connections>
+                                            <action selector="selectImageFromCamera:" destination="BYZ-38-t0r" id="Dxd-aP-qnM"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Album" id="8b3-kp-HYp">
+                                        <connections>
+                                            <action selector="selectImageFromAlbum:" destination="BYZ-38-t0r" id="TCQ-vk-Z8q"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JfR-ET-0Uo">
@@ -39,12 +47,20 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="myi-0V-AqF">
+                                <rect key="frame" x="47" y="154" width="274" height="371"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="selectedImageView" destination="myi-0V-AqF" id="PA0-nR-tix"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="36.431784107946029"/>
         </scene>
     </scenes>
 </document>
