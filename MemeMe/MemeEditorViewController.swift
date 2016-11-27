@@ -11,13 +11,19 @@ import UIKit
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var selectedImageView: UIImageView!
-    @IBOutlet weak var topText: UITextField!
-    @IBOutlet weak var bottomText: UITextField!
+    @IBOutlet weak var topTextField: UITextField!
+    @IBOutlet weak var bottomTextField: UITextField!
+    
+    @IBOutlet weak var navbar: UINavigationBar!
+    @IBOutlet weak var toolbar: UIToolbar!
+    
+    var savedMemes : [Meme] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let paragraphStyle = NSMutableParagraphStyle()
+        
         paragraphStyle.alignment = .center
         
         let memeTextAttributes: [String:Any] = [
@@ -28,29 +34,64 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             NSKernAttributeName: 2,   // Add a little spacing between characters
             NSParagraphStyleAttributeName: paragraphStyle]
         
-        topText.defaultTextAttributes = memeTextAttributes
-        bottomText.defaultTextAttributes = memeTextAttributes
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
         
-        topText.delegate = self
-        bottomText.delegate = self
+        topTextField.delegate = self
+        bottomTextField.delegate = self
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if (textField == topText || textField == bottomText) {
-            textField.text = ""
-        }
+        textField.text = ""
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    func save(_ memedImage : UIImage) {
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: selectedImageView.image!, memedImage: memedImage)
+        
+        // save the meme to memory for now
+        savedMemes.append(meme)
     }
-
+    
+    @IBAction func share() {
+        let memedImage = generateMemedImage()
+        let activityView = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        
+        activityView.completionWithItemsHandler = { activity, completed, items, error in
+            if (completed) {
+                self.save(memedImage)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        present(activityView, animated: true, completion: nil)
+    }
+    
+    func generateMemedImage() -> UIImage {
+        // Hide toolbar and navbar
+        toolbar.isHidden = true
+        navbar.isHidden = true
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        // Show toolbar and navbar
+        toolbar.isHidden = false
+        navbar.isHidden = false
+        
+        return memedImage
+    }
+    
+    // MARK: Select Image
+    
     @IBAction func selectImageFromCamera(_ sender: Any) {
         selectImageFromSource(UIImagePickerControllerSourceType.camera)
     }
@@ -83,12 +124,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func showAlert(_ title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-
+    // MARK: Keyboard Notifications
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
@@ -100,7 +137,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func keyboardWillShow(_ notification:Notification) {
-        if (bottomText.isFirstResponder) {
+        if (bottomTextField.isFirstResponder) {
             view.frame.origin.y = 0 - getKeyboardHeight(notification)
         }
     }
@@ -125,5 +162,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
 
+    // MARK : Utility functions
+    func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    
 }
 
