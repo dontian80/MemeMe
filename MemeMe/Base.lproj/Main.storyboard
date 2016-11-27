@@ -58,7 +58,11 @@
                                                 <action selector="share" destination="BYZ-38-t0r" id="dzD-aI-UTq"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="b1L-Nv-VoJ"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Reset" id="b1L-Nv-VoJ">
+                                            <connections>
+                                                <action selector="reset" destination="BYZ-38-t0r" id="jnL-Gn-yIu"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -92,8 +96,10 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="bottomTextField" destination="Ax8-gM-F9n" id="2ib-Bq-S69"/>
+                        <outlet property="cameraButton" destination="xnc-fh-1Sn" id="MmB-Pv-AQj"/>
                         <outlet property="navbar" destination="JfR-ET-0Uo" id="2Au-0G-clE"/>
                         <outlet property="selectedImageView" destination="myi-0V-AqF" id="PA0-nR-tix"/>
+                        <outlet property="shareButton" destination="Krd-Pm-2cW" id="TC7-dd-x0o"/>
                         <outlet property="toolbar" destination="Te0-7k-pT5" id="g36-LE-RqT"/>
                         <outlet property="topTextField" destination="ajp-le-u5h" id="ZAC-5q-BfY"/>
                     </connections>

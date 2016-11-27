@@ -16,6 +16,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBOutlet weak var navbar: UINavigationBar!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
     
     var savedMemes : [Meme] = []
     
@@ -39,6 +41,12 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         
         topTextField.delegate = self
         bottomTextField.delegate = self
+        
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            cameraButton.isEnabled = false
+        }
+        
+        resetMemeEditor()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -49,7 +57,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         textField.resignFirstResponder()
         return true
     }
-    
     
     func save(_ memedImage : UIImage) {
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: selectedImageView.image!, memedImage: memedImage)
@@ -70,6 +77,17 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         }
         
         present(activityView, animated: true, completion: nil)
+    }
+    
+    @IBAction func reset() {
+        resetMemeEditor()
+    }
+    
+    func resetMemeEditor() {
+        selectedImageView.image = nil
+        shareButton.isEnabled = false
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
     }
     
     func generateMemedImage() -> UIImage {
@@ -115,6 +133,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             selectedImageView.image = image
+            shareButton.isEnabled = true
         }
         
         picker.dismiss(animated: true, completion: nil)
