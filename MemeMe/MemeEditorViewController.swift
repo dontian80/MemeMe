@@ -19,8 +19,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     
-    var savedMemes : [Meme] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +60,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: selectedImageView.image!, memedImage: memedImage)
         
         // save the meme to memory for now
-        savedMemes.append(meme)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     @IBAction func share() {
@@ -182,10 +181,11 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
 
     // MARK : Utility functions
+
     func showAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     
