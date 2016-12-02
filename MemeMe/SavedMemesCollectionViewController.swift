@@ -12,6 +12,8 @@ private let reuseIdentifier = "Cell"
 
 class SavedMemesCollectionViewController: UICollectionViewController {
 
+    var savedMemes : [Meme]!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +24,13 @@ class SavedMemesCollectionViewController: UICollectionViewController {
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        savedMemes = appDelegate.memes
+        collectionView?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,22 +51,24 @@ class SavedMemesCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return savedMemes.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "savedMeme", for: indexPath) as! SavedMemeCollectionViewCell
+        
+        let savedMeme = savedMemes[indexPath.row]
+        
+        // Configure the cell.
+        cell.imageView?.image = savedMeme.memedImage
+        
         return cell
+
     }
 
     // MARK: UICollectionViewDelegate
