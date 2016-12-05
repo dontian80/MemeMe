@@ -81,8 +81,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         present(activityView, animated: true, completion: nil)
     }
     
-    @IBAction func reset() {
-        resetMemeEditor()
+    @IBAction func cancel() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func resetMemeEditor() {

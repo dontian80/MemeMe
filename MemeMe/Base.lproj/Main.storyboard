@@ -70,6 +70,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="GL9-PO-AEg" kind="show" id="ID8-1k-Y35"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -78,6 +81,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Saved Memes" id="oUf-kO-VXl">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="0zW-Za-j1P"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="UeK-bC-XAd">
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="presentation" id="QMw-rz-t9e"/>
@@ -88,6 +92,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drz-MT-hUK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-190" y="-1038"/>
+        </scene>
+        <!--View Meme-->
+        <scene sceneID="zdL-Pc-jtp">
+            <objects>
+                <viewController title="View Meme" id="GL9-PO-AEg" customClass="MemeViewerViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sfQ-32-Yc4"/>
+                        <viewControllerLayoutGuide type="bottom" id="N8Z-1K-Wc3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qt4-dX-8W0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="svb-9P-ZFh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="svb-9P-ZFh" firstAttribute="leading" secondItem="qt4-dX-8W0" secondAttribute="leading" id="Fk0-7G-gq3"/>
+                            <constraint firstAttribute="trailing" secondItem="svb-9P-ZFh" secondAttribute="trailing" id="f9r-IO-WEv"/>
+                            <constraint firstItem="svb-9P-ZFh" firstAttribute="top" secondItem="sfQ-32-Yc4" secondAttribute="bottom" id="hzf-fg-Eep"/>
+                            <constraint firstItem="N8Z-1K-Wc3" firstAttribute="top" secondItem="svb-9P-ZFh" secondAttribute="bottom" id="yPj-pw-8u1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="svb-9P-ZFh" id="vOj-V7-0ef"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bZo-Vc-1ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="685.60000000000002" y="-1039.4302848575712"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gU6-TS-c4O">
@@ -211,9 +247,9 @@
                                                 <action selector="share" destination="BYZ-38-t0r" id="dzD-aI-UTq"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Reset" id="b1L-Nv-VoJ">
+                                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="b1L-Nv-VoJ">
                                             <connections>
-                                                <action selector="reset" destination="BYZ-38-t0r" id="jnL-Gn-yIu"/>
+                                                <action selector="cancel" destination="BYZ-38-t0r" id="os7-nh-C3W"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -259,7 +295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-700"/>
+            <point key="canvasLocation" x="1142" y="-326"/>
         </scene>
     </scenes>
     <resources>
@@ -267,6 +303,6 @@
         <image name="table" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BBf-Ev-nPD"/>
+        <segue reference="QMw-rz-t9e"/>
     </inferredMetricsTieBreakers>
 </document>
